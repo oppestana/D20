@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sessao4")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec9201748d749775c94525584e0239d3b2f501aa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56bebfd61554ebac8172ed1e7e96a75fabf0c332")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sessao4")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sessao4")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

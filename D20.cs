@@ -389,6 +389,11 @@ namespace Sessao3
                             playerMoney += 1 + (int)playerMoneyBonus;
                             Console.WriteLine($"Você se curou em {cura} de vida! (D{dadoJogador}, {messageJogador})");
                         }
+                        else
+                        {
+                            Console.WriteLine("Escolha inválida, você perdeu o turno!");
+                            playerSkipped = true;
+                        }
                     }
 
                     if (!playerSkipped && vidaInimigo <= 0)
