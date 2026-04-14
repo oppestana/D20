@@ -47,7 +47,7 @@ namespace Sessao3
 
             Random random = new Random();
 
-            int difficultyLevel = 0; // Increases with progress
+            int difficultyLevel = 0;
 
             var totalDamageDealt = 0;
             var totalHealed = 0;
@@ -131,8 +131,8 @@ namespace Sessao3
 
             Enemy CreateEnemyWithDifficulty(Enemy baseEnemy)
             {
-                double healthMultiplier = 1.0 + (difficultyLevel * 0.1); // +10% health per difficulty level
-                double damageMultiplier = 1.0 + (difficultyLevel * 0.05); // +5% damage per difficulty level
+                double healthMultiplier = 1.0 + (difficultyLevel * 0.5);
+                double damageMultiplier = 1.0 + (difficultyLevel * 0.4);
 
                 return new Enemy
                 {
@@ -225,17 +225,17 @@ namespace Sessao3
                 Console.Clear();
                 Console.WriteLine("===== LOJA =====\n");
                 var options = GetRandomItems(shopItems, 5);
-                Console.WriteLine($"Seu dinheiro: {playerMoney}");
-                Console.WriteLine("Escolha um item para comprar, ou 0 para sair sem comprar:");
-                for (int i = 0; i < options.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {options[i].Name} - {options[i].Description} (Custo: {options[i].Cost})");
-                }
-                Console.WriteLine("0. Sair da loja");
-
-                int choice;
                 while (true)
                 {
+                    Console.WriteLine($"Seu dinheiro: {playerMoney}");
+                    Console.WriteLine("Escolha um item para comprar, ou 0 para sair sem comprar:");
+                    for (int i = 0; i < options.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {options[i].Name} - {options[i].Description} (Custo: {options[i].Cost})");
+                    }
+                    Console.WriteLine("0. Sair da loja");
+
+                    int choice;
                     Console.Write("Digite o número do item que deseja comprar ou 0 para sair: ");
                     if (int.TryParse(Console.ReadLine(), out choice) && choice >= 0 && choice <= options.Count)
                     {
@@ -247,13 +247,21 @@ namespace Sessao3
                         {
                             playerMoney -= item.Cost;
                             ApplyItem(item);
-                            break;
+                            Console.WriteLine("Compra realizada! Você pode continuar comprando ou sair.");
                         }
                         else
                         {
                             Console.WriteLine("Você não tem dinheiro suficiente para comprar esse item.");
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("Escolha inválida. Tente novamente.");
+                    }
+                    Console.WriteLine("\nPressione ENTER para continuar...");
+                    Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("===== LOJA =====\n");
                 }
 
                 Console.WriteLine("\nPressione ENTER para continuar...");
@@ -273,12 +281,11 @@ namespace Sessao3
                 bool enemyParalyzed = false;
                 int rayMageCooldown = 0;
 
-                // Enhanced enemy abilities based on difficulty
-                int enhancedPoisonTurns = 2 + (difficultyLevel / 3); // More poison turns
-                double enhancedPoisonDamageMultiplier = 1.0 + (difficultyLevel * 0.1); // More poison damage
-                int enhancedParalyzeTurns = 1 + (difficultyLevel / 5); // More paralyze turns
-                double enhancedDoubleActionChance = 20 + (difficultyLevel * 2); // Higher chance for double action
-                double enhancedDoubleAttackChance = 15 + (difficultyLevel * 1.5); // Higher chance for double attack
+                int enhancedPoisonTurns = 2 + (difficultyLevel / 3);
+                double enhancedPoisonDamageMultiplier = 1.0 + (difficultyLevel * 0.1);
+                int enhancedParalyzeTurns = 1 + (difficultyLevel / 5);
+                double enhancedDoubleActionChance = 20 + (difficultyLevel * 2);
+                double enhancedDoubleAttackChance = 15 + (difficultyLevel * 1.5);
 
                 int battleDamageDealt = 0;
                 int battleHealed = 0;
@@ -495,18 +502,14 @@ namespace Sessao3
                 if (playerWon)
                 {
                     enemiesDefeated++;
+                    difficultyLevel++;
+
                     if (!defeatedEnemies.ContainsKey(selectedEnemy.Name))
                         defeatedEnemies[selectedEnemy.Name] = 0;
                     defeatedEnemies[selectedEnemy.Name]++;
 
-                    // Increase difficulty every 5 enemies defeated
-                    if (enemiesDefeated % 5 == 0)
-                    {
-                        difficultyLevel++;
-                        Console.WriteLine($"Parabéns! Você alcançou o nível de dificuldade {difficultyLevel}!");
-                        Console.WriteLine("Os inimigos estão ficando mais fortes...");
-                    }
-
+                    Console.WriteLine($"Parabéns! Você alcançou o nível de dificuldade {difficultyLevel}!");
+                    Console.WriteLine("Os inimigos estão ficando mais fortes...");
                     Console.WriteLine($"Você venceu o {selectedEnemy.Name}!");
                 }
                 else
